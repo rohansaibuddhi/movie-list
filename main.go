@@ -7,14 +7,22 @@ import (
 	"net/http"
 )
 
-type movie struct {
-	Name     string
+type Film struct {
+	Title    string
 	Director string
 }
 
 func handler(w http.ResponseWriter, r *http.Request) {
 	tmpl := template.Must(template.ParseFiles("main.html"))
-	tmpl.Execute(w, nil)
+
+	films := map[string][]Film{
+		"Films": {
+			{Title: "The Godfather", Director: "Francis Ford Coppola"},
+			{Title: "The Blade Runner", Director: "Ridley Scott"},
+			{Title: "The Thing", Director: "John Carpenter"},
+		},
+	}
+	tmpl.Execute(w, films)
 	fmt.Println("Web server is active")
 }
 
